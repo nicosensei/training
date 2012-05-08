@@ -1,4 +1,4 @@
-The problem to solve is the synchronization of two fileystem directories. 
+The problem to solve is the synchronization of two file system directories. 
 Supposing the original structure were: 
 
 <tree name="root">
