@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.sleepycat.je.DatabaseException;
 import com.sleepycat.je.Environment;
 import com.sleepycat.persist.EntityStore;
+import com.sleepycat.persist.PrimaryIndex;
 import com.sleepycat.persist.StoreConfig;
 
 import fr.nicosensei.training.ubeeko.AbstractBDB;
@@ -41,6 +42,11 @@ public class XmlMockFileSystem extends AbstractBDB {
     private EntityStore store;
 
     /**
+     * Primary index, retrieves nodes by absolute path.
+     */
+    private PrimaryIndex<String, XmlMockFileSystemNode> nodesByPath;
+
+    /**
      * Constructor from BDB storage folder.
      * @param fsDbStorageFolder the BDB storage folder
      */
@@ -55,6 +61,35 @@ public class XmlMockFileSystem extends AbstractBDB {
      */
     public static XmlMockFileSystem createFromXmlDescriptor(String descriptorPath) {
         return null; // TODO implement
+    }
+
+    /**
+     * Initializes the file system.
+     * @throws DatabaseException if init failed.
+     * @return the root node
+     */
+    public FolderNode init() throws DatabaseException {
+        startEnvironment();
+
+        nodesByPath = store.getPrimaryIndex(String.class, XmlMockFileSystemNode.class);
+
+        FolderNode rootNode = new FolderNode();
+        nodesByPath.putNoReturn(rootNode);
+
+        return rootNode;
+
+    }
+
+    /**
+     * Initializes the file system.
+     * @param destroy if true wipes the BDB storage.
+     * @throws DatabaseException if close failed.
+     */
+    public void close(boolean destroy) throws DatabaseException {
+        stopEnvironment();
+        if (destroy) {
+            removeStorageDir();
+        }
     }
 
     @Override

@@ -56,7 +56,7 @@ public abstract class AbstractBDB {
      * Closes the BDB.
      * @throws DatabaseException when the operation failed.
      */
-    public void stopEnvironment() throws DatabaseException {
+    protected void stopEnvironment() throws DatabaseException {
         closeStores();
         if (dbEnvironment != null) {
             dbEnvironment.cleanLog();
@@ -85,8 +85,7 @@ public abstract class AbstractBDB {
      * @throws DatabaseException when the operation failed
      * @throws EnvironmentLockedException if the environment is already in use
      */
-    protected void startEnvironment()
-            throws EnvironmentLockedException, DatabaseException {
+    protected void startEnvironment() throws DatabaseException {
 
         if (dbEnvironment != null) {
             return; // already initialized

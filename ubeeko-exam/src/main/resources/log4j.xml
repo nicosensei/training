@@ -19,11 +19,10 @@
       <param name="ConversionPattern" value="%d{ISO8601} - %p %t %c - %m%n" />
     </layout>
   </appender>
-
+destroy
   <root>
     <priority value="error" />
     <appender-ref ref="console" />
-    <appender-ref ref="Api" />
   </root>
 
   <category name="fr.nicosensei.training.ubeeko" additivity="false">
