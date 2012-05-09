@@ -13,13 +13,13 @@ import org.junit.Test;
  * @author ngiraud
  *
  */
-public class XmlMockFileSystemNodeTest extends TestCase {
+public class XmlMockFileSystemTest extends TestCase {
 
     /**
      * Test a basic file system structure.
      */
     @Test
-    public final void testBasicTreeStructure() {
+    public final void testBasicNodes() {
         try {
             new FolderNode(null, "");
             new FolderNode(null, "foo");
@@ -32,9 +32,14 @@ public class XmlMockFileSystemNodeTest extends TestCase {
         assertEquals("", root.getParentPath());
         assertEquals("", root.getName());
 
-        long arbitraryCreationTime = new Date(2012, 5, 9).getTime();
+        long arbitraryCreationTime = 123456789L;
         FolderNode folderA = new FolderNode(root, "folderA");
         folderA.setCreationTime(arbitraryCreationTime);
+        assertEquals(arbitraryCreationTime, folderA.getCreationTime());
+        assertEquals("/folderA", folderA.getAbsolutePath());
+        assertEquals("/", folderA.getParentPath());
+        assertEquals("folderA", folderA.getName());
+
         FolderNode folderB = new FolderNode(root, "folderB");
         folderB.setCreationTime(arbitraryCreationTime);
         FolderNode folderC = new FolderNode(folderA, "folderB");
@@ -45,7 +50,6 @@ public class XmlMockFileSystemNodeTest extends TestCase {
         foo2Txt.setCreationTime(arbitraryCreationTime);
         FileNode foo3Txt = new FileNode(folderC, "foo1.txt");
         foo3Txt.setCreationTime(arbitraryCreationTime);
-
 
     }
 

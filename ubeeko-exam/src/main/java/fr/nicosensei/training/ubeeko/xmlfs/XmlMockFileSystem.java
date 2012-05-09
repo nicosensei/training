@@ -44,8 +44,17 @@ public class XmlMockFileSystem extends AbstractBDB {
      * Constructor from BDB storage folder.
      * @param fsDbStorageFolder the BDB storage folder
      */
-    public XmlMockFileSystem(final String fsDbStorageFolder) {
+    protected XmlMockFileSystem(final String fsDbStorageFolder) {
         this.fsDbStorageFolder = fsDbStorageFolder;
+    }
+
+    /**
+     * Factory method. Parses the given XML descriptor to create the file system DB.
+     * @param descriptorPath path to the descriptor.
+     * @return the file system instance.
+     */
+    public static XmlMockFileSystem createFromXmlDescriptor(String descriptorPath) {
+        return null; // TODO implement
     }
 
     @Override
