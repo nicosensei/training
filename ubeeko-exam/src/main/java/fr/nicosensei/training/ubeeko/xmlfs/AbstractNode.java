@@ -1,8 +1,5 @@
 package fr.nicosensei.training.ubeeko.xmlfs;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 import com.sleepycat.persist.model.Relationship;
@@ -44,20 +41,27 @@ abstract class AbstractNode implements XmlMockFileSystemNode {
     private final Type type;
 
     /**
+     * The creation time.
+     */
+    @SecondaryKey(relate = Relationship.MANY_TO_ONE)
+    private long creationTime;
+
+    /**
      * Constructor from parent node, name and type.
-     * @param parent the parent node
+     * @param parentPath the parent node path
      * @param type the node type
      * @param name the node name
      */
     public AbstractNode(
-            final XmlMockFileSystemNode parent,
+            final String parentPath,
             final Type type,
             final String name) {
         super();
-        this.parentPath = parent.getAbsolutePath();
+        this.parentPath = parentPath;
         this.path = parentPath + PATH_SEPARATOR + name;
         this.name = name;
         this.type = type;
+        this.creationTime = System.currentTimeMillis();
     }
 
     /**
@@ -98,10 +102,18 @@ abstract class AbstractNode implements XmlMockFileSystemNode {
     }
 
     /**
-     * Returns an XML representation of the node.
-     * @param doc the XML document.
-     * @return a DOM Element
+     * @return the creation time (standard milliseconds since reference time).
      */
-    public abstract Element getAsXml(Document doc);
+    public long getCreationTime() {
+        return creationTime;
+    }
+
+    /**
+     * Sets the creation time.
+     * @param timeInMillis the time to set
+     */
+    protected void setCreationTime(long timeInMillis) {
+        creationTime = timeInMillis;
+    }
 
 }

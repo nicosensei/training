@@ -1,131 +1,94 @@
 package fr.nicosensei.training.ubeeko.xmlfs;
 
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
+import java.util.List;
 
-import fuse.Filesystem3;
-import fuse.FuseDirFiller;
-import fuse.FuseException;
-import fuse.FuseGetattrSetter;
-import fuse.FuseOpenSetter;
-import fuse.FuseStatfsSetter;
+import org.apache.log4j.Logger;
+
+import com.sleepycat.je.DatabaseException;
+import com.sleepycat.je.Environment;
+import com.sleepycat.persist.EntityStore;
+import com.sleepycat.persist.StoreConfig;
+
+import fr.nicosensei.training.ubeeko.AbstractBDB;
+
 
 /**
- * Mock file system implementation.
+ * Mock file system implementation, backed up by a Berkeley DB.
  * @author nicolas
  *
  */
-public class XmlMockFileSystem implements Filesystem3 {
+public class XmlMockFileSystem extends AbstractBDB {
 
-	public int getattr(String path, FuseGetattrSetter getattrSetter)
-			throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * Constant, default max memory usage (percentage of JVM memory) to use for the BDB.
+     * TODO this should be configurable
+     */
+    private static final int DEFAULT_MEM_CACHE_PERCENTAGE = 20;
 
-	public int readlink(String path, CharBuffer link) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * The class logger.
+     */
+    private final Logger log = Logger.getLogger(XmlMockFileSystem.class);
 
-	public int getdir(String path, FuseDirFiller dirFiller)
-			throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * Storage folder for the BDB storing the file system description.
+     */
+    private final String fsDbStorageFolder;
 
-	public int mknod(String path, int mode, int rdev) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * The store used to persist entities.
+     */
+    private EntityStore store;
 
-	public int mkdir(String path, int mode) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /**
+     * Constructor from BDB storage folder.
+     * @param fsDbStorageFolder the BDB storage folder
+     */
+    public XmlMockFileSystem(final String fsDbStorageFolder) {
+        this.fsDbStorageFolder = fsDbStorageFolder;
+    }
 
-	public int unlink(String path) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    protected String getStorageFolderPath() {
+        return fsDbStorageFolder;
+    }
 
-	public int rmdir(String path) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    protected int getCachePercentage() {
+        return DEFAULT_MEM_CACHE_PERCENTAGE;
+    }
 
-	public int symlink(String from, String to) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    protected void closeStores() {
+        if (store != null) {
+            try {
+                store.close();
+            } catch (final DatabaseException e) {
+                throw new RuntimeException(e); // TODO proper exception handling
+            }
+            if (log.isInfoEnabled()) {
+                log.info("Closed entity store.");
+            }
+        }
+    }
 
-	public int rename(String from, String to) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    protected void initStores(Environment dbEnv) {
+        try {
+            StoreConfig storeCfg = new StoreConfig();
+            List<String> dbNames = dbEnv.getDatabaseNames();
+            boolean allowCreate = dbNames.isEmpty();
+            storeCfg.setAllowCreate(allowCreate);
 
-	public int link(String from, String to) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+            store = new EntityStore(
+                    dbEnv, XmlMockFileSystem.class.getSimpleName(), storeCfg);
 
-	public int chmod(String path, int mode) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int chown(String path, int uid, int gid) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int truncate(String path, long size) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int utime(String path, int atime, int mtime) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int statfs(FuseStatfsSetter statfsSetter) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int open(String path, int flags, FuseOpenSetter openSetter)
-			throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int read(String path, Object fh, ByteBuffer buf, long offset)
-			throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int write(String path, Object fh, boolean isWritepage,
-			ByteBuffer buf, long offset) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int flush(String path, Object fh) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int release(String path, Object fh, int flags) throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int fsync(String path, Object fh, boolean isDatasync)
-			throws FuseException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+            if (log.isInfoEnabled()) {
+                log.info("Initialized entity store (allowCreate=" + allowCreate + ").");
+            }
+        } catch (final DatabaseException e) {
+            throw new RuntimeException(e); // TODO proper exception handling
+        }
+    }
 
 }

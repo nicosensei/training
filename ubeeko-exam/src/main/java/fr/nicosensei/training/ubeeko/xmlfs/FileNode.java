@@ -1,8 +1,5 @@
 package fr.nicosensei.training.ubeeko.xmlfs;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.Relationship;
 import com.sleepycat.persist.model.SecondaryKey;
@@ -20,7 +17,7 @@ public class FileNode extends AbstractNode {
      * The modification date.
      */
     @SecondaryKey(relate = Relationship.MANY_TO_ONE)
-    private long modificationDate;
+    private long modificationTime;
 
     /**
      * File size in bytes.
@@ -33,21 +30,21 @@ public class FileNode extends AbstractNode {
      * @param name the node name
      */
     public FileNode(final XmlMockFileSystemNode parent, final String name) {
-        super(parent, Type.FILE, name);
+        super(parent.getAbsolutePath(), Type.FILE, name);
     }
 
     /**
      * @return the modificationDate
      */
     public long getModificationDate() {
-        return modificationDate;
+        return modificationTime;
     }
 
     /**
      * @param modificationDate the modificationDate to set
      */
     public void setModificationDate(long modificationDate) {
-        this.modificationDate = modificationDate;
+        this.modificationTime = modificationDate;
     }
 
     /**
@@ -62,15 +59,6 @@ public class FileNode extends AbstractNode {
      */
     public void setSize(long size) {
         this.size = size;
-    }
-
-    @Override
-    public Element getAsXml(Document doc) {
-        Element e = doc.createElement("file");
-        e.setAttribute("name", getName());
-        e.setAttribute("modificationDate", "" + modificationDate);
-        e.setAttribute("size", "" + size);
-        return e;
     }
 
 }

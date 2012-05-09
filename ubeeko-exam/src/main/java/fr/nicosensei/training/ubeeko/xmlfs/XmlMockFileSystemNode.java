@@ -1,7 +1,5 @@
 package fr.nicosensei.training.ubeeko.xmlfs;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * A node in the file system.
@@ -59,10 +57,8 @@ public interface XmlMockFileSystemNode {
     Type getType();
 
     /**
-     * Returns an XML representation of the node.
-     * @param doc the XML document.
-     * @return a DOM Element
+     * @return the creation time (standard milliseconds since reference time).
      */
-    Element getAsXml(Document doc);
+    long getCreationTime();
 
 }
