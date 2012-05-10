@@ -27,7 +27,11 @@ public final class XmlMockFileSystemNode {
      */
     public enum Type {
         /**
-         * A tree (tree) node.
+         * A root (tree) node.
+         */
+        ROOT,
+        /**
+         * A folder (tree) node.
          */
         FOLDER,
         /**
@@ -64,13 +68,11 @@ public final class XmlMockFileSystemNode {
     /**
      * The creation time.
      */
-    @SecondaryKey(relate = Relationship.MANY_TO_ONE)
     private long creationTime;
 
     /**
      * The modification date.
      */
-    @SecondaryKey(relate = Relationship.MANY_TO_ONE)
     private long modificationTime;
 
     /**
@@ -78,31 +80,46 @@ public final class XmlMockFileSystemNode {
      */
     private long size;
 
+
     /**
      * Default constructor, required by BDB.
+     * Builds the root node.
      */
     private XmlMockFileSystemNode() {
-
+        this.parentPath = "";
+        this.name = "";
+        this.path = PATH_SEPARATOR;
+        this.type = Type.ROOT.ordinal();
     }
 
     /**
      * Constructor from parent node, name and type.
-     * @param parentPath the parent node path
+     * @param parent the parent node
      * @param type the node type
      * @param name the node name
      */
     private XmlMockFileSystemNode(
-            final String parentPath,
+            final XmlMockFileSystemNode parent,
             final Type type,
             final String name) {
-        super();
-        this.parentPath = parentPath;
-        // If parent is FS root, don't add separator twice
-        this.path = (PATH_SEPARATOR.equals(parentPath) ? "" : parentPath)
-                + PATH_SEPARATOR + name;
+
+        if (Type.ROOT.equals(parent.getType())) {
+            // Direct child to root node
+            this.path = PATH_SEPARATOR + name;
+        } else {
+            this.path = parent.getAbsolutePath() + PATH_SEPARATOR + name;
+        }
         this.name = name;
+        this.parentPath = parent.getAbsolutePath();
         this.type = type.ordinal();
         this.creationTime = System.currentTimeMillis();
+    }
+
+    /**
+     * @return a new root node instance
+     */
+    public static XmlMockFileSystemNode newRoot() {
+        return new XmlMockFileSystemNode();
     }
 
     /**
@@ -114,10 +131,7 @@ public final class XmlMockFileSystemNode {
     public static XmlMockFileSystemNode newFolder(
             XmlMockFileSystemNode parent,
             String name) {
-        return new XmlMockFileSystemNode(
-                (parent == null ? "" : parent.getParentPath()),
-                Type.FOLDER,
-                name);
+        return new XmlMockFileSystemNode(parent, Type.FOLDER, name);
     }
 
     /**
@@ -129,7 +143,7 @@ public final class XmlMockFileSystemNode {
     public static XmlMockFileSystemNode newFile(
             XmlMockFileSystemNode parent,
             String name) {
-        return new XmlMockFileSystemNode(parent.getAbsolutePath(), Type.FILE, name);
+        return new XmlMockFileSystemNode(parent, Type.FILE, name);
     }
 
     /**
@@ -210,6 +224,44 @@ public final class XmlMockFileSystemNode {
      */
     public void setSize(long size) {
         this.size = size;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((path == null) ? 0 : path.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        XmlMockFileSystemNode other = (XmlMockFileSystemNode) obj;
+        if (path == null) {
+            if (other.path != null) {
+                return false;
+            }
+        } else if (!path.equals(other.path)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "XmlMockFileSystemNode [path=" + path + ", parentPath="
+                + parentPath + ", name=" + name + ", type=" + type
+                + ", creationTime=" + creationTime + ", modificationTime="
+                + modificationTime + ", size=" + size + "]";
     }
 
 }

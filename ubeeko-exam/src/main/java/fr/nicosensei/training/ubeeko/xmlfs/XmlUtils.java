@@ -1,9 +1,12 @@
 /**
  *
  */
-package fr.nicosensei.training.ubeeko;
+package fr.nicosensei.training.ubeeko.xmlfs;
 
+import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,6 +19,10 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * XML utilities.
@@ -68,6 +75,44 @@ public class XmlUtils {
         } catch (final TransformerException e) {
             throw new RuntimeException(e); // TODO proper exception handling
         }
+    }
+
+    /**
+     * Makes a DOM document out of an XML file.
+     * @param pathToFile path to the XML file.
+     * @return a DOM document
+     */
+    public static final Document parseXmlFile(String pathToFile) {
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(pathToFile);
+            doc.getDocumentElement().normalize();
+            return doc;
+        } catch (final ParserConfigurationException e) {
+            throw new RuntimeException(e); // TODO proper exception handling
+        } catch (final SAXException e) {
+            throw new RuntimeException(e); // TODO proper exception handling
+        } catch (final IOException e) {
+            throw new RuntimeException(e); // TODO proper exception handling
+        }
+    }
+
+    /**
+     * Fetches children {@link Element}s of the given node.
+     * @param e the element to scan
+     * @return children {@link Element}s of the given node (non-null list).
+     */
+    public static final List<Element> getChildrenElements(Element e) {
+        NodeList nodes = e.getChildNodes();
+        List<Element> children = new ArrayList<Element>();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node n = nodes.item(i);
+            if (n instanceof Element) {
+                children.add((Element) n);
+            }
+        }
+        return children;
     }
 
 }

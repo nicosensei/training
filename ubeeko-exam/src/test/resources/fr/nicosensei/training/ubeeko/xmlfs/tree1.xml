@@ -1,0 +1,7 @@
+<tree name="root">
+    <tree name="home">
+    <tree name="joe">
+        <file name="a.txt" modif-date="20120102T1030" size="5032"/>
+    </tree>
+    </tree>
+</tree>
