@@ -1,4 +1,4 @@
-package fr.nicosensei.training.ubeeko.xmlfs;
+package fr.nicosensei.training.ubeeko.mockfs;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +20,7 @@ import com.sleepycat.persist.SecondaryIndex;
 import com.sleepycat.persist.StoreConfig;
 
 import fr.nicosensei.training.ubeeko.AbstractBDB;
+import fr.nicosensei.training.ubeeko.mockfs.MockFileSystemNode.Type;
 
 
 /**
@@ -27,7 +28,7 @@ import fr.nicosensei.training.ubeeko.AbstractBDB;
  * @author nicolas
  *
  */
-public class XmlMockFileSystem extends AbstractBDB {
+public class MockFileSystem extends AbstractBDB {
 
     /**
      * Constant, default max memory usage (percentage of JVM memory) to use for the BDB.
@@ -38,13 +39,13 @@ public class XmlMockFileSystem extends AbstractBDB {
     /**
      * Constant: date format expected in XML descriptors.
      */
-    protected static final SimpleDateFormat DATE_FORMAT =
+    public static final SimpleDateFormat DATE_FORMAT =
             new SimpleDateFormat("yyyyMMdd'T'hhmm");
 
     /**
      * The class logger.
      */
-    private final Logger log = Logger.getLogger(XmlMockFileSystem.class);
+    private final Logger log = Logger.getLogger(MockFileSystem.class);
 
     /**
      * Storage folder for the BDB storing the file system description.
@@ -59,28 +60,28 @@ public class XmlMockFileSystem extends AbstractBDB {
     /**
      * Primary index, retrieves nodes by absolute path.
      */
-    private PrimaryIndex<String, XmlMockFileSystemNode> nodesByPath;
+    private PrimaryIndex<String, MockFileSystemNode> nodesByPath;
 
     /**
      * Secondary index, retrieves nodes by parent path.
      */
-    private SecondaryIndex<String, String, XmlMockFileSystemNode> nodesByParentPath;
+    private SecondaryIndex<String, String, MockFileSystemNode> nodesByParentPath;
 
     /**
      * Secondary index, retrieves nodes by name.
      */
-    private SecondaryIndex<String, String, XmlMockFileSystemNode> nodesByName;
+    private SecondaryIndex<String, String, MockFileSystemNode> nodesByName;
 
     /**
      * Secondary index, retrieves nodes by type.
      */
-    private SecondaryIndex<Integer, String, XmlMockFileSystemNode> nodesByType;
+    private SecondaryIndex<Integer, String, MockFileSystemNode> nodesByType;
 
     /**
      * Constructor from BDB storage folder.
      * @param fsDbStorageFolder the BDB storage folder
      */
-    protected XmlMockFileSystem(final String fsDbStorageFolder) {
+    public MockFileSystem(final String fsDbStorageFolder) {
         this.fsDbStorageFolder = fsDbStorageFolder;
     }
 
@@ -91,11 +92,11 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @return the file system instance.
      * @throws DatabaseException if an error occurred during initialization.
      */
-    public static XmlMockFileSystem createFromXmlDescriptor(
+    public static MockFileSystem createFromXmlDescriptor(
             String xmlFilePath,
             String storageFolderPath) throws DatabaseException {
-        XmlMockFileSystem mfs = new XmlMockFileSystem(storageFolderPath);
-        XmlMockFileSystemNode rootNode = mfs.init();
+        MockFileSystem mfs = new MockFileSystem(storageFolderPath);
+        MockFileSystemNode rootNode = mfs.init();
 
         Document doc = XmlUtils.parseXmlFile(xmlFilePath);
         mfs.recursiveLoad(doc.getDocumentElement(), rootNode);
@@ -108,19 +109,19 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @throws DatabaseException if init failed.
      * @return the root node
      */
-    public XmlMockFileSystemNode init() throws DatabaseException {
+    public MockFileSystemNode init() throws DatabaseException {
         startEnvironment();
-        nodesByPath = store.getPrimaryIndex(String.class, XmlMockFileSystemNode.class);
+        nodesByPath = store.getPrimaryIndex(String.class, MockFileSystemNode.class);
         nodesByParentPath =
                 store.getSecondaryIndex(nodesByPath, String.class, "parentPath");
         nodesByName =
                 store.getSecondaryIndex(nodesByPath, String.class, "name");
         nodesByType =
                 store.getSecondaryIndex(nodesByPath, Integer.class, "type");
-        XmlMockFileSystemNode rootNode =
-                getNodeByPath(XmlMockFileSystemNode.PATH_SEPARATOR);
+        MockFileSystemNode rootNode =
+                getNodeByPath(MockFileSystemNode.PATH_SEPARATOR);
         if (rootNode == null) {
-            rootNode = XmlMockFileSystemNode.newRoot();
+            rootNode = MockFileSystemNode.newRoot();
             nodesByPath.putNoReturn(rootNode);
         }
         return rootNode;
@@ -131,8 +132,32 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @param node the node to add/update
      * @throws DatabaseException if the node is duplicated
      */
-    public void addOrUpdateNode(XmlMockFileSystemNode node) throws DatabaseException {
+    public void addOrUpdateNode(MockFileSystemNode node) throws DatabaseException {
         nodesByPath.putNoReturn(node);
+    }
+
+    /**
+     * Deletes a node, recursively deleting children.
+     * @param node the node to delete
+     * @throws DatabaseException if the node could not be deleted
+     */
+    public void deleteNode(MockFileSystemNode node) throws DatabaseException {
+        Type type = node.getType();
+        if (Type.ROOT.equals(type)) {
+            return; // can't delete root, delete whole FS
+        }
+
+        if (Type.FOLDER.equals(type)) {
+            Iterator<MockFileSystemNode> children = getChildrenNodes(node);
+            while (children.hasNext()) {
+                deleteNode(children.next());
+            }
+        }
+
+        if (!nodesByPath.delete(node.getAbsolutePath())) {
+            // TODO proper exception handling
+            throw new RuntimeException("Failed to delete node " + node);
+        }
     }
 
     /**
@@ -141,7 +166,7 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @return the matching node, or null if no match was found.
      * @throws DatabaseException TODO document
      */
-    public XmlMockFileSystemNode getNodeByPath(String path) throws DatabaseException {
+    public MockFileSystemNode getNodeByPath(String path) throws DatabaseException {
         return nodesByPath.get(path);
     }
 
@@ -151,13 +176,13 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @return the direct children of the given node.
      * @throws DatabaseException if the operation failed.
      */
-    public Iterator<XmlMockFileSystemNode> getChildrenNodes(XmlMockFileSystemNode parent)
+    public Iterator<MockFileSystemNode> getChildrenNodes(MockFileSystemNode parent)
             throws DatabaseException {
-        EntityCursor<XmlMockFileSystemNode> cursor =
+        EntityCursor<MockFileSystemNode> cursor =
                 nodesByParentPath.subIndex(parent.getAbsolutePath()).entities();
-        List<XmlMockFileSystemNode> children = new ArrayList<XmlMockFileSystemNode>();
+        List<MockFileSystemNode> children = new ArrayList<MockFileSystemNode>();
         try {
-            for (XmlMockFileSystemNode n : cursor) {
+            for (MockFileSystemNode n : cursor) {
                 children.add(n);
             }
         } finally {
@@ -211,7 +236,7 @@ public class XmlMockFileSystem extends AbstractBDB {
             storeCfg.setAllowCreate(allowCreate);
 
             store = new EntityStore(
-                    dbEnv, XmlMockFileSystem.class.getSimpleName(), storeCfg);
+                    dbEnv, MockFileSystem.class.getSimpleName(), storeCfg);
 
             if (log.isInfoEnabled()) {
                 log.info("Initialized entity store (allowCreate=" + allowCreate + ").");
@@ -227,20 +252,20 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @throws DatabaseException if BDB operation fails
      * @param rootNode the root FS node.
      */
-    private void recursiveLoad(Element root, XmlMockFileSystemNode rootNode)
+    private void recursiveLoad(Element root, MockFileSystemNode rootNode)
             throws DatabaseException {
         List<Element> rootChildren = XmlUtils.getChildrenElements(root);
         for (Element e : rootChildren) {
             String tagName = e.getTagName();
             String nodeName = e.getAttribute("name");
             if ("tree".equals(tagName)) {
-                XmlMockFileSystemNode folder =
-                        XmlMockFileSystemNode.newFolder(rootNode, nodeName);
+                MockFileSystemNode folder =
+                        MockFileSystemNode.newFolder(rootNode, nodeName);
                 addOrUpdateNode(folder);
                 recursiveLoad(e, folder);
             } else if ("file".equals(tagName)) {
-                XmlMockFileSystemNode file =
-                        XmlMockFileSystemNode.newFile(rootNode, nodeName);
+                MockFileSystemNode file =
+                        MockFileSystemNode.newFile(rootNode, nodeName);
 
                 file.setSize(Long.parseLong(e.getAttribute("size")));
                 Date modifDate = null;

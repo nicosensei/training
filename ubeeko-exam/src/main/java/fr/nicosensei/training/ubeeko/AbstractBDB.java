@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import com.sleepycat.je.DatabaseException;
 import com.sleepycat.je.Environment;
 import com.sleepycat.je.EnvironmentConfig;
-import com.sleepycat.je.EnvironmentLockedException;
 
 /**
  * Abstract Berkeley DB storage.
@@ -83,7 +82,6 @@ public abstract class AbstractBDB {
      * Initializes the DB environment, by creating the DB if the storage
      * folder does not exist, and attempt to load the DB otherwise.
      * @throws DatabaseException when the operation failed
-     * @throws EnvironmentLockedException if the environment is already in use
      */
     protected void startEnvironment() throws DatabaseException {
 

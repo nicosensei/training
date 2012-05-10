@@ -1,4 +1,4 @@
-package fr.nicosensei.training.ubeeko.xmlfs;
+package fr.nicosensei.training.ubeeko.mockfs;
 
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
@@ -13,7 +13,7 @@ import com.sleepycat.persist.model.SecondaryKey;
  *
  */
 @Entity
-public final class XmlMockFileSystemNode {
+public final class MockFileSystemNode {
 
     /**
      * Constant: path separator.
@@ -85,7 +85,7 @@ public final class XmlMockFileSystemNode {
      * Default constructor, required by BDB.
      * Builds the root node.
      */
-    private XmlMockFileSystemNode() {
+    private MockFileSystemNode() {
         this.parentPath = "";
         this.name = "";
         this.path = PATH_SEPARATOR;
@@ -98,8 +98,8 @@ public final class XmlMockFileSystemNode {
      * @param type the node type
      * @param name the node name
      */
-    private XmlMockFileSystemNode(
-            final XmlMockFileSystemNode parent,
+    private MockFileSystemNode(
+            final MockFileSystemNode parent,
             final Type type,
             final String name) {
 
@@ -118,8 +118,8 @@ public final class XmlMockFileSystemNode {
     /**
      * @return a new root node instance
      */
-    public static XmlMockFileSystemNode newRoot() {
-        return new XmlMockFileSystemNode();
+    public static MockFileSystemNode newRoot() {
+        return new MockFileSystemNode();
     }
 
     /**
@@ -128,10 +128,10 @@ public final class XmlMockFileSystemNode {
      * @param name name
      * @return the proper instance.
      */
-    public static XmlMockFileSystemNode newFolder(
-            XmlMockFileSystemNode parent,
+    public static MockFileSystemNode newFolder(
+            MockFileSystemNode parent,
             String name) {
-        return new XmlMockFileSystemNode(parent, Type.FOLDER, name);
+        return new MockFileSystemNode(parent, Type.FOLDER, name);
     }
 
     /**
@@ -140,10 +140,10 @@ public final class XmlMockFileSystemNode {
      * @param name name
      * @return the proper instance.
      */
-    public static XmlMockFileSystemNode newFile(
-            XmlMockFileSystemNode parent,
+    public static MockFileSystemNode newFile(
+            MockFileSystemNode parent,
             String name) {
-        return new XmlMockFileSystemNode(parent, Type.FILE, name);
+        return new MockFileSystemNode(parent, Type.FILE, name);
     }
 
     /**
@@ -245,7 +245,7 @@ public final class XmlMockFileSystemNode {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        XmlMockFileSystemNode other = (XmlMockFileSystemNode) obj;
+        MockFileSystemNode other = (MockFileSystemNode) obj;
         if (path == null) {
             if (other.path != null) {
                 return false;
@@ -258,7 +258,7 @@ public final class XmlMockFileSystemNode {
 
     @Override
     public String toString() {
-        return "XmlMockFileSystemNode [path=" + path + ", parentPath="
+        return "MockFileSystemNode [path=" + path + ", parentPath="
                 + parentPath + ", name=" + name + ", type=" + type
                 + ", creationTime=" + creationTime + ", modificationTime="
                 + modificationTime + ", size=" + size + "]";

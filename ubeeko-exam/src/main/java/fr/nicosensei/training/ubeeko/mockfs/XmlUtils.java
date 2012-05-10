@@ -1,7 +1,7 @@
 /**
  *
  */
-package fr.nicosensei.training.ubeeko.xmlfs;
+package fr.nicosensei.training.ubeeko.mockfs;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
  * @author ngiraud
  *
  */
-public class XmlUtils {
+public final class XmlUtils {
 
     /**
      * Mute default constructor.
@@ -43,7 +43,7 @@ public class XmlUtils {
      *
      * @return a brand new {@link Document} instance.
      */
-    public static final Document newDocument() {
+    public static Document newDocument() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
         try {
@@ -59,7 +59,7 @@ public class XmlUtils {
      * @param doc the document to output
      * @param out the writer to output to
      */
-    public static final void writeDocument(Document doc, Writer out) {
+    public static void writeDocument(Document doc, Writer out) {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = null;
         try {
@@ -82,7 +82,7 @@ public class XmlUtils {
      * @param pathToFile path to the XML file.
      * @return a DOM document
      */
-    public static final Document parseXmlFile(String pathToFile) {
+    public static Document parseXmlFile(String pathToFile) {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -103,7 +103,7 @@ public class XmlUtils {
      * @param e the element to scan
      * @return children {@link Element}s of the given node (non-null list).
      */
-    public static final List<Element> getChildrenElements(Element e) {
+    public static List<Element> getChildrenElements(Element e) {
         NodeList nodes = e.getChildNodes();
         List<Element> children = new ArrayList<Element>();
         for (int i = 0; i < nodes.getLength(); i++) {

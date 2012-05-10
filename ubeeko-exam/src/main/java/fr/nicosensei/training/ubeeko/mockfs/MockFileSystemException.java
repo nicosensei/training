@@ -1,4 +1,4 @@
-package fr.nicosensei.training.ubeeko.xmlfs;
+package fr.nicosensei.training.ubeeko.mockfs;
 
 import fuse.FuseException;
 
@@ -8,19 +8,19 @@ import fuse.FuseException;
  * @author nicolas
  *
  */
-public class XmlMockFileSystemException extends FuseException {
+public class MockFileSystemException extends FuseException {
 
-	private XmlMockFileSystemException(Throwable cause) {
+	private MockFileSystemException(Throwable cause) {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public XmlMockFileSystemException(String message) {
+	public MockFileSystemException(String message) {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public XmlMockFileSystemException(String message, Throwable cause) {
+	public MockFileSystemException(String message, Throwable cause) {
 		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}

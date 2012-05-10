@@ -12,4 +12,4 @@
  * &lt;/tree&gt;
  * </code>
  */
-package fr.nicosensei.training.ubeeko.xmlfs;
+package fr.nicosensei.training.ubeeko.mockfs;
