@@ -1,6 +1,3 @@
-/**
- *
- */
 package fr.nicosensei.training.ubeeko.xmlfs;
 
 import java.io.File;
@@ -8,10 +5,8 @@ import java.io.File;
 import junit.framework.TestCase;
 
 import org.junit.Test;
-XmlMockFileSystemNode
-import com.sleepycat.je.DatabaseException;
 
-import fr.nicosensei.training.ubeeko.xmlfs.XmlMockFileSystemNode.Type;
+import com.sleepycat.je.DatabaseException;
 
 /**
  * @author ngiraud
@@ -31,20 +26,20 @@ public class XmlMockFileSystemTest extends TestCase {
         } catch (final Exception e) {
             assertEquals(NullPointerException.class, e.getClass());
         }
-        XmlMockFileSystemNode root = XmlMockFileSystemNode.newFolder("", "");
+        XmlMockFileSystemNode root = XmlMockFileSystemNode.newFolder(null, "");
         assertEquals(XmlMockFileSystemNode.PATH_SEPARATOR, root.getAbsolutePath());
         assertEquals("", root.getParentPath());
         assertEquals("", root.getName());
 
         long arbitraryCreationTime = 123456789L;
-        XmlMockFileSystemNode folderA = new XmlMockFileSystemNode(root, "folderA");
+        XmlMockFileSystemNode folderA = XmlMockFileSystemNode.newFolder(root, "folderA");
         folderA.setCreationTime(arbitraryCreationTime);
         assertEquals(arbitraryCreationTime, folderA.getCreationTime());
         assertEquals("/folderA", folderA.getAbsolutePath());
         assertEquals("/", folderA.getParentPath());
         assertEquals("folderA", folderA.getName());
 
-        XmlMockFileSystemNode folderB = new XmlMockFileSystemNode(root, "folderB");
+        XmlMockFileSystemNode folderB = XmlMockFileSystemNode.newFolder(root, "folderB");
         folderB.setCreationTime(arbitraryCreationTime);
         assertEquals(arbitraryCreationTime, folderB.getCreationTime());
         assertEquals("/folderB", folderB.getAbsolutePath());
@@ -52,14 +47,16 @@ public class XmlMockFileSystemTest extends TestCase {
         assertEquals("folderB", folderB.getName());
 
 
-        XmlMockFileSystemNode folderC = new XmlMockFileSystemNode(folderA, "folderC");
+        XmlMockFileSystemNode folderC =
+                XmlMockFileSystemNode.newFolder(folderA, "folderC");
         folderC.setCreationTime(arbitraryCreationTime);
         assertEquals(arbitraryCreationTime, folderC.getCreationTime());
         assertEquals("/folderA/folderC", folderC.getAbsolutePath());
         assertEquals("/folderA", folderC.getParentPath());
         assertEquals("folderC", folderC.getName());
 
-        XmlMockFileSystemNode foo1Txt = new XmlMockFileSystemNode(folderA, "foo1.txt");
+        XmlMockFileSystemNode foo1Txt =
+                XmlMockFileSystemNode.newFile(folderA, "foo1.txt");
         foo1Txt.setCreationTime(arbitraryCreationTime);
         assertEquals(arbitraryCreationTime, foo1Txt.getCreationTime());
         assertEquals("/folderA/foo1.txt", foo1Txt.getAbsolutePath());
@@ -68,7 +65,8 @@ public class XmlMockFileSystemTest extends TestCase {
         assertEquals(0, foo1Txt.getModificationTime());
         assertEquals(0, foo1Txt.getSize());
 
-        XmlMockFileSystemNode foo2Txt = new XmlMockFileSystemNode(folderC, "foo2.txt");
+        XmlMockFileSystemNode foo2Txt =
+                XmlMockFileSystemNode.newFile(folderC, "foo2.txt");
         foo2Txt.setCreationTime(arbitraryCreationTime);
         long time = 987654321L;
         foo2Txt.setModificationDate(time);

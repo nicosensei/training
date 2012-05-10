@@ -107,22 +107,29 @@ public final class XmlMockFileSystemNode {
 
     /**
      * Creates a folder.
-     * @param parentPath parent path
+     * @param parent parent node
      * @param name name
      * @return the proper instance.
      */
-    public static XmlMockFileSystemNode newFolder(String parentPath, String name) {
-        return new XmlMockFileSystemNode(parentPath, Type.FOLDER, name);
+    public static XmlMockFileSystemNode newFolder(
+            XmlMockFileSystemNode parent,
+            String name) {
+        return new XmlMockFileSystemNode(
+                (parent == null ? "" : parent.getParentPath()),
+                Type.FOLDER,
+                name);
     }
 
     /**
      * Creates a file.
-     * @param parentPath parent path
+     * @param parent parent node
      * @param name name
      * @return the proper instance.
      */
-    public static XmlMockFileSystemNode newFile(String parentPath, String name) {
-        return new XmlMockFileSystemNode(parentPath, Type.FILE, name);
+    public static XmlMockFileSystemNode newFile(
+            XmlMockFileSystemNode parent,
+            String name) {
+        return new XmlMockFileSystemNode(parent.getAbsolutePath(), Type.FILE, name);
     }
 
     /**

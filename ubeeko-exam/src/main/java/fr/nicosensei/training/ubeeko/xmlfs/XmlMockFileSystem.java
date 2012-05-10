@@ -68,14 +68,11 @@ public class XmlMockFileSystem extends AbstractBDB {
      * @throws DatabaseException if init failed.
      * @return the root node
      */
-    public FolderNode init() throws DatabaseException {
+    public XmlMockFileSystemNode init() throws DatabaseException {
         startEnvironment();
-
         nodesByPath = store.getPrimaryIndex(String.class, XmlMockFileSystemNode.class);
-
-        FolderNode rootNode = new FolderNode();
+        XmlMockFileSystemNode rootNode = XmlMockFileSystemNode.newFolder(null, "");
         nodesByPath.putNoReturn(rootNode);
-
         return rootNode;
 
     }
