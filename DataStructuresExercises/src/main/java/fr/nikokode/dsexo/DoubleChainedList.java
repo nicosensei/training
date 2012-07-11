@@ -169,6 +169,10 @@ public class DoubleChainedList {
 		return removeAtOffset(seekOffset(index));
 	}
 	
+	public Object getFirst() {
+		return values[first];
+	}
+	
 	private Object removeAtOffset(int offset) {
 		
 		if (length == 0) {

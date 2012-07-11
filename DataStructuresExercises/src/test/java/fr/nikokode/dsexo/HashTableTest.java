@@ -1,37 +1,27 @@
 package fr.nikokode.dsexo;
 
-import org.junit.Test;
-
-import fr.nikokode.dsexo.hash.HashFunction;
-import fr.nikokode.dsexo.hash.HashTable;
-
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
+import fr.nikokode.dsexo.hash.HashTable;
+import fr.nikokode.dsexo.hash.ModuloHash;
+import fr.nikokode.dsexo.hash.MultiplicationHash;
+
 public class HashTableTest extends TestCase {
-	
-	/**
-	 * Simplest integer hash function.
-	 */
-	class ModuloHash extends HashFunction<Integer> {
-
-		private final int prime;
-		
-		public ModuloHash(int prime) {
-			super();
-			this.prime = prime;
-		}
-
-		@Override
-		public int hash(Integer key) {
-			return key.intValue() % prime;
-		}
-		
-	}
 	
 	class ModuloHashTable extends HashTable<Integer, String> {
 		
 		ModuloHashTable() {
-			super(PRIME_SMALL, new ModuloHash(PRIME_SMALL));
+			super(PRIME_SMALL, 100, new ModuloHash(PRIME_SMALL));
+		}
+		
+	}
+	
+	class MultiplicationHashTable extends HashTable<Integer, String> {
+		
+		MultiplicationHashTable() {
+			super(PRIME_SMALL, 100, new MultiplicationHash(PRIME_SMALL));
 		}
 		
 	}
@@ -49,20 +39,43 @@ public class HashTableTest extends TestCase {
 		ModuloHashTable t = new ModuloHashTable();
 		
 		t.put(0, "a");
-		assertEquals("{\n0 > (0, a)\n}", t.printContents());
+		assertEquals("{\n0 > [(0, a)]\n}", t.printContents());
 		
 		t.put(1, "b");
-		assertEquals("{\n0 > (0, a)\n1 > (1, b)\n}", t.printContents());
+		assertEquals("{\n0 > [(0, a)]\n1 > [(1, b)]\n}", t.printContents());
 		
 		t.put(PRIME_SMALL - 1, "c");
 		assertEquals(
-				"{\n0 > (0, a)\n1 > (1, b)\n30 > (30, c)\n}", 
+				"{\n0 > [(0, a)]\n1 > [(1, b)]\n30 > [(30, c)]\n}", 
 				t.printContents());
 		
 		// First collision
 		t.put(PRIME_SMALL, "d");
 		assertEquals(
-				"{\n0 > (0, a)(31, d)\n1 > (1, b)\n30 > (30, c)\n}", 
+				"{\n0 > [(0, a), (31, d)]\n1 > [(1, b)]\n30 > [(30, c)]\n}", 
+				t.printContents());
+		
+	}
+	
+	@Test
+	public final void testMultiplicationHash() {
+		MultiplicationHashTable t = new MultiplicationHashTable();
+		
+		t.put(0, "a");
+		assertEquals("{\n0 > [(0, a)]\n}", t.printContents());
+		
+		t.put(1, "b");
+		assertEquals("{\n0 > [(0, a)]\n19 > [(1, b)]\n}", t.printContents());
+		
+		t.put(PRIME_SMALL - 1, "c");
+		assertEquals(
+				"{\n0 > [(0, a)]\n17 > [(30, c)]\n19 > [(1, b)]\n}", 
+				t.printContents());
+		
+		// First collision
+		t.put(PRIME_SMALL, "d");
+		assertEquals(
+				"{\n0 > [(0, a)]\n5 > [(31, d)]\n17 > [(30, c)]\n19 > [(1, b)]\n}", 
 				t.printContents());
 		
 	}
