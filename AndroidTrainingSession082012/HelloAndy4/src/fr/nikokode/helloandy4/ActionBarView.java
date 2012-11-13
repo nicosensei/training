@@ -17,7 +17,8 @@ import android.view.View.OnClickListener;;
  * @author STAGIAIRE
  *
  */
-public class ActionBarView extends LinearLayout implements OnClickListener {
+public class ActionBarView extends LinearLayout 
+implements OnClickListener, OnDispatchClickListener {
 
 	private View mConvertView;
 	private ImageButton mButtonSearch;
@@ -26,6 +27,8 @@ public class ActionBarView extends LinearLayout implements OnClickListener {
 	private ProgressBar mProgressBar;
 	private TextView mTitle;
 	private OnDispatchClickListener mListenerClick;
+	
+	private boolean loading = false;
 	
 	public ActionBarView(Context context, AttributeSet attrs) {
 		super(context,attrs);
@@ -41,6 +44,7 @@ public class ActionBarView extends LinearLayout implements OnClickListener {
 		mButtonSearch.setOnClickListener(this);
 		mButtonComment.setOnClickListener(this);
 		mProgressBar.setOnClickListener(this);
+		setOnDispatchClickListener(this);
 	}
 	
 	public void showButtonSearch() {
@@ -70,4 +74,16 @@ public class ActionBarView extends LinearLayout implements OnClickListener {
 	public void setOnDispatchClickListener(OnDispatchClickListener v) {
 		mListenerClick = v;
 	}
+
+	public void onDispatchClick(int id) {
+		if (loading) {
+			loaded();
+			setTitle("Done!");
+		} else {
+			setTitle("Loading...");
+			loading();
+		}
+		loading = !loading;		
+	}
+	
 }

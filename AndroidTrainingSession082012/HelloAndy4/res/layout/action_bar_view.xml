@@ -1,72 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#000"
-    android:paddingBottom="1dp" >
+	android:layout_width="fill_parent" android:layout_height="wrap_content"
+	android:background="#000" android:paddingBottom="1dp">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/ab_home"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginRight="1dp"
-            android:background="@drawable/btn"
-            android:padding="10dp"
-            android:src="@drawable/home" />
-
-        <TextView
-            android:id="@+id/ab_title"
+		<ImageButton 
+		    android:layout_width="wrap_content"
+			android:layout_height="50dp" 
+			android:src="@drawable/home"
+			android:id="@+id/ab_home" 
+			android:layout_marginRight="1dp"
+			android:background="#aaf" 
+			android:padding="10dp" />
+			
+	   <TextView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/btn"
-            android:gravity="center|left"
-            android:paddingLeft="10dp"
-            android:textColor="#fff"
+            android:id="@+id/ab_title"
             android:textSize="16dp"
-            android:textStyle="bold" />
+            android:paddingLeft="10dp"
+            android:gravity="center|left"
+            android:textStyle="bold"
+            android:textColor="#fff"
+            android:background="#aaf"
+        />
+        
     </LinearLayout>
-
+        
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_gravity="right"
         android:background="#000"
-        android:orientation="horizontal" >
-
+    >
+        
         <ProgressBar
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
             android:id="@+id/ab_loading"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:visibility="gone" />
-
+            android:background="#aaf"
+            android:visibility="gone"
+        />
+        
         <ImageButton
-            android:id="@+id/ab_comment"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="1dp"
-            android:background="@drawable/btn"
-            android:gravity="right"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
             android:src="@drawable/comment"
-            android:visibility="gone" />
-
-        <ImageButton
-            android:id="@+id/ab_search"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="1dp"
-            android:background="@drawable/btn"
             android:padding="10dp"
             android:scaleType="fitCenter"
+            android:layout_marginLeft="1dp"
+            android:id="@+id/ab_comment"
+            android:visibility="gone"
+            android:background="#aaf"
+            android:gravity="right"
+        />
+    
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/search"
-            android:visibility="gone" />
-    </LinearLayout>
+            android:padding="10dp"
+            android:layout_marginLeft="1dp"
+            android:scaleType="fitCenter"
+            android:id="@+id/ab_search"
+            android:visibility="gone"
+            android:background="#aaf"
+        />
+
+	</LinearLayout>
 
 </FrameLayout>
