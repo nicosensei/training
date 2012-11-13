@@ -7,8 +7,7 @@
     <Button
         android:id="@+id/button_category_crime"
         style="@style/categoryButton"
-        android:text="@string/category_crime"
-        and />
+        android:text="@string/category_crime" />
     
     <Button
         android:id="@+id/button_category_fiction"
