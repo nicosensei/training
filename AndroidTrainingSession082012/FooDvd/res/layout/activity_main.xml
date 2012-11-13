@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/button_category_crime"
+        style="@style/categoryButton"
+        android:text="@string/category_crime"
+        and />
+    
+    <Button
+        android:id="@+id/button_category_fiction"
+        style="@style/categoryButton"
+        android:text="@string/category_fiction" />
+    
+    <Button
+        android:id="@+id/button_category_documentary"
+        android:text="@string/category_documentary" 
+        style="@style/categoryButton"/>
+    
+    <Button
+        android:id="@+id/button_category_serial"
+        android:text="@string/category_serial" 
+        style="@style/categoryButton"/>
+    
+
+</LinearLayout>

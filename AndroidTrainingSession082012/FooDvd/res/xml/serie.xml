@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ressources>
+	<dvd cat="serie" titre="Les Experts" realisateur="Jeffrey Hunt" img="serie_1"></dvd>
+	<dvd cat="serie" titre="Cold case" realisateur="Marcos Siega" img="serie_2"></dvd>
+	<dvd cat="serie" titre="Grey's anatomy" realisateur="Bill d'Elia" img="serie_3"></dvd>
+	<dvd cat="serie" titre="NCIS" realisateur="Tony Wharmby" img="serie_4"></dvd>
+	<dvd cat="serie" titre="New Yord District" realisateur="Dick Wolf" img="serie_5"></dvd>
+</ressources>

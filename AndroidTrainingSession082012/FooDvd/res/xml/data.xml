@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ressources>
+
+	<dvd cat="doc" titre="Océans" real="Lancelot Perrin" img="doc_1"></dvd>
+	<dvd cat="doc" titre="Planète Terre" real="David Attenborough" img="doc_2"></dvd>
+	<dvd cat="doc" titre="Home" real="Yann Arthus-Bertrand " img="doc_3"></dvd>
+	<dvd cat="doc" titre="Microcosmos" real="Claude Nuridsany" img="doc_4"></dvd>
+	
+	<dvd cat="serie" titre="Les Experts" real="Jeffrey Hunt" img="serie_1" ></dvd>
+	<dvd cat="serie" titre="Cold case" real="Marcos Siega" img="serie_2"></dvd>
+	<dvd cat="serie" titre="Grey's anatomy" real="Bill d'Elia" img="serie_3"></dvd>
+	<dvd cat="serie" titre="NCIS" real="Tony Wharmby" img="serie_4"></dvd>
+	<dvd cat="serie" titre="New Yord District" real="Dick Wolf" img="serie_5"></dvd>
+	
+	<dvd cat="policier" titre="Kill Bill - vol 1" real="Quentin Tarantino" img="pol_1"></dvd>
+	<dvd cat="policier" titre="Kill Bill - vol 2" real="Quentin Tarantino" img="pol_2"></dvd>
+	<dvd cat="policier" titre="Otage" real="Florent Emilio Siri" img="pol_3"></dvd>
+	<dvd cat="policier" titre="Da Vinci Code" real="Ron Howard" img="pol_4"></dvd>
+	<dvd cat="policier" titre="36 quai des orfèvres" real="Florent Emilio Siri" img="pol_5"></dvd>
+	<dvd cat="policier" titre="Olivier Marchal" real="Florent Emilio Siri" img="pol_6"></dvd>
+	
+	<dvd cat="fiction" titre="Total Recall" real="Paul Verhoeven" img="fic_1"></dvd>
+	<dvd cat="fiction" titre="Flash Gordon" real="Mike Hodges" img="fic_2"></dvd>
+	<dvd cat="fiction" titre="Invasion Los Angeles" real="John Carpente" img="fic_3"></dvd>
+	<dvd cat="fiction" titre="Menace Andromed" real="Mikael Salomon" img="fic_4"></dvd>
+	<dvd cat="fiction" titre="Cargo" real="Ivan Engler" img="fic_5"></dvd>
+	<dvd cat="fiction" titre="Battle Planet" real="Greg Aronowitz " img="fic_6"></dvd>
+	<dvd cat="fiction" titre="Moon" real="Duncan Jones" img="fic_7"></dvd>
+	<dvd cat="fiction" titre="Hors du temps" real="Robert Schwentke" img="fic_8"></dvd>
+	
+</ressources>
