@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">HelloAndy5</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="ask_andy">Howdy Andy?</string>
+    <string name="title_activity_ask_andy">AskAndyActivity</string>
+    <string name="andy_silent">...</string>
+
+</resources>
