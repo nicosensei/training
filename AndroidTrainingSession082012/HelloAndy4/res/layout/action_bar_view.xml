@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#000"
+    android:paddingBottom="1dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/ab_home"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginRight="1dp"
+            android:background="@drawable/btn"
+            android:padding="10dp"
+            android:src="@drawable/home" />
+
+        <TextView
+            android:id="@+id/ab_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/btn"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:textColor="#fff"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="#000"
+        android:orientation="horizontal" >
+
+        <ProgressBar
+            android:id="@+id/ab_loading"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/ab_comment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="1dp"
+            android:background="@drawable/btn"
+            android:gravity="right"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/comment"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/ab_search"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="1dp"
+            android:background="@drawable/btn"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/search"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</FrameLayout>
