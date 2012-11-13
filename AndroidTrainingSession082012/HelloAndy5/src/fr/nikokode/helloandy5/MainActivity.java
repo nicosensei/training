@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	
+	private int nextAnswerNum = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends Activity {
     
     public void onClickHowdy(View view) {    	
     	Intent askHowdyIntent = new Intent(this, AskAndyActivity.class);
+    	askHowdyIntent.putExtra(AskAndyActivity.LAST_ANSWER_NUM, nextAnswerNum);
     	startActivityForResult(askHowdyIntent, AskAndyActivity.RESULT_CODE);
     }
 
@@ -34,6 +37,9 @@ public class MainActivity extends Activity {
 			String answer = data.getExtras().getString(AskAndyActivity.ANDY_ANSWER);
 			TextView answerTv = (TextView) findViewById(R.id.answerTextView);
 			answerTv.setText(answer);
+			
+			int answerNum = data.getExtras().getInt(AskAndyActivity.LAST_ANSWER_NUM);
+			this.nextAnswerNum = answerNum;
 		}
 	}
 }
