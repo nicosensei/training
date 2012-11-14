@@ -21,28 +21,49 @@
             android:gravity="center"/>
         
         <LinearLayout style="@style/categorySpacer" />
-        <Button
-            android:id="@+id/button_category_crime"
-            style="@style/categoryButton"
-            android:text="@string/category_crime" />
+        <LinearLayout style="@style/categoryContainer">
+            <ImageButton
+                android:id="@+id/button_category_crime"
+                style="@style/categoryImgButton"/>
+            <TextView 
+                android:id="@+id/label_category_crime"
+                style="@style/categoryLabel"
+                android:text="@string/category_crime"/>    
+        </LinearLayout>
+                
+        <LinearLayout style="@style/categorySpacer" />
+        <LinearLayout style="@style/categoryContainer">
+            <ImageButton
+                android:id="@+id/button_category_fiction"
+                style="@style/categoryImgButton"/>
+            <TextView 
+                android:id="@+id/label_category_fiction"
+                style="@style/categoryLabel"
+                android:text="@string/category_fiction"/>    
+        </LinearLayout>
         
         <LinearLayout style="@style/categorySpacer" />
-        <Button
-            android:id="@+id/button_category_fiction"
-            style="@style/categoryButton"
-            android:text="@string/category_fiction" />
+        <LinearLayout style="@style/categoryContainer">
+            <ImageButton
+                android:id="@+id/button_category_documentary"
+                style="@style/categoryImgButton"/>
+            <TextView 
+                android:id="@+id/label_category_documentary"
+                style="@style/categoryLabel"
+                android:text="@string/category_documentary"/>    
+        </LinearLayout>
         
         <LinearLayout style="@style/categorySpacer" />
-        <Button
-            android:id="@+id/button_category_documentary"
-            style="@style/categoryButton"
-            android:text="@string/category_documentary" />
-        
-        <LinearLayout style="@style/categorySpacer" />
-        <Button
-            android:id="@+id/button_category_serial"
-            style="@style/categoryButton"
-            android:text="@string/category_serial" />
+        <LinearLayout style="@style/categoryContainer">
+            <ImageButton
+                android:id="@+id/button_category_serial"
+                style="@style/categoryImgButton"/>
+            <TextView
+                android:id="@+id/label_category_serial"
+                style="@style/categoryLabel"                
+                android:text="@string/category_serial" />
+    
+        </LinearLayout>
         
         <LinearLayout style="@style/categorySpacer" />
             

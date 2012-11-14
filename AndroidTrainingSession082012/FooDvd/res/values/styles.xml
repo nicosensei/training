@@ -21,6 +21,19 @@
         <item name="android:textSize">16dip</item>
     </style>
     
+    <style name="categoryImgButton" parent="@style/centered.horizontal">>
+        <item name="android:src">@drawable/icon</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    
+    <style name="categoryLabel" parent="@style/centered.horizontal">
+        <item name="android:layout_weight">2</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textColor">#aaf</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:paddingLeft">20px</item>
+    </style>
+    
     <style name="categorySpacer" parent="@style/centered.vertical">
         <item name="android:layout_weight">1</item>
     </style>
@@ -32,6 +45,11 @@
     <style name="categoriesContainer" parent="@style/centered.horizontal">
         <item name="android:layout_weight">6</item>
         <item name="android:orientation">vertical</item>
+    </style>
+    
+    <style name="categoryContainer" parent="@style/centered.vertical">
+        <item name="android:layout_weight">2</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
 </resources>
