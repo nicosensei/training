@@ -8,5 +8,11 @@
     <string name="category_fiction">Fiction</string>
     <string name="category_documentary">Documentary</string>
     <string name="category_serial">Serial</string>
-
+    <string name="menu_search">Search DVDs</string>
+    <string name="menu_book">Book a DVD</string>
+    <string name="menu_shops">Shops</string>
+    <string name="menu_about">About us</string>
+    <string name="menu_about_contact">Contact us</string>
+    <string name="menu_about_team">Our team</string>
+    <string name="menu_about_growth">Growth</string>
 </resources>
