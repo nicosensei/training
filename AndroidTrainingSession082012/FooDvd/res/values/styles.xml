@@ -6,12 +6,12 @@
         <item name="android:layout_gravity">center</item>
     </style>
     
-    <style name="centered.horizontal">
+    <style name="centered.horizontal" parent="@style/centered">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">fill_parent</item>
     </style>
     
-    <style name="centered.vertical">
+    <style name="centered.vertical" parent="@style/centered">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">0dp</item>
     </style>

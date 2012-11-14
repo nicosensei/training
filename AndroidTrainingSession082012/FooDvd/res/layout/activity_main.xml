@@ -9,6 +9,18 @@
     <LinearLayout style="@style/categoriesContainer" >
         
         <LinearLayout style="@style/categorySpacer" />
+        
+        <TextView
+            android:id="@+id/chooseCategoryLabel"
+            style="@style/centered.vertical"
+            android:layout_weight="1"
+            android:text="@string/choose_category_label"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="italic" 
+            android:textColor="#fff"
+            android:gravity="center"/>
+        
+        <LinearLayout style="@style/categorySpacer" />
         <Button
             android:id="@+id/button_category_crime"
             style="@style/categoryButton"
