@@ -2,11 +2,36 @@
 
     <style name="AppTheme" parent="android:Theme.Black" />
     
-    <style name="categoryButton">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="centered">
         <item name="android:layout_gravity">center</item>
+    </style>
+    
+    <style name="centered.horizontal">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    
+    <style name="centered.vertical">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">0dp</item>
+    </style>
+    
+    <style name="categoryButton" parent="@style/centered.vertical">
+        <item name="android:layout_weight">2</item>
         <item name="android:textSize">16dip</item>
+    </style>
+    
+    <style name="categorySpacer" parent="@style/centered.vertical">
+        <item name="android:layout_weight">1</item>
+    </style>
+    
+    <style name="categoriesSpacer" parent="@style/centered.horizontal">
+        <item name="android:layout_weight">1</item>
+    </style>
+    
+    <style name="categoriesContainer" parent="@style/centered.horizontal">
+        <item name="android:layout_weight">6</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
 </resources>

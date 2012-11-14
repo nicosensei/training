@@ -1,28 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/button_category_crime"
-        style="@style/categoryButton"
-        android:text="@string/category_crime" />
+    <LinearLayout style="@style/categoriesSpacer" />
     
-    <Button
-        android:id="@+id/button_category_fiction"
-        style="@style/categoryButton"
-        android:text="@string/category_fiction" />
+    <LinearLayout style="@style/categoriesContainer" >
+        
+        <LinearLayout style="@style/categorySpacer" />
+        <Button
+            android:id="@+id/button_category_crime"
+            style="@style/categoryButton"
+            android:text="@string/category_crime" />
+        
+        <LinearLayout style="@style/categorySpacer" />
+        <Button
+            android:id="@+id/button_category_fiction"
+            style="@style/categoryButton"
+            android:text="@string/category_fiction" />
+        
+        <LinearLayout style="@style/categorySpacer" />
+        <Button
+            android:id="@+id/button_category_documentary"
+            style="@style/categoryButton"
+            android:text="@string/category_documentary" />
+        
+        <LinearLayout style="@style/categorySpacer" />
+        <Button
+            android:id="@+id/button_category_serial"
+            style="@style/categoryButton"
+            android:text="@string/category_serial" />
+        
+        <LinearLayout style="@style/categorySpacer" />
+            
+    </LinearLayout>    
     
-    <Button
-        android:id="@+id/button_category_documentary"
-        android:text="@string/category_documentary" 
-        style="@style/categoryButton"/>
-    
-    <Button
-        android:id="@+id/button_category_serial"
-        android:text="@string/category_serial" 
-        style="@style/categoryButton"/>
+    <LinearLayout style="@style/categoriesSpacer"/>
     
 
 </LinearLayout>
