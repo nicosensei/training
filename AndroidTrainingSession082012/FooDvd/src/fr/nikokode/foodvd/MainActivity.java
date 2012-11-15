@@ -1,10 +1,10 @@
 package fr.nikokode.foodvd;
 
+import fr.nikokode.foodvd.bdb.MovieStorage;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,17 +12,18 @@ import android.view.MenuItem;
 
 public class MainActivity extends Activity {
 
-	private MovieDatabase mdb;
+	private MovieStorage mdb;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         // Handle database initialization
-        mdb = new MovieDatabase(getBaseContext());
-        SQLiteDatabase db = mdb.getWritableDatabase();
-        db.setLockingEnabled(false);
-        mdb.onCreate(db);
+//        mdb = new MovieDatabase(getBaseContext());
+//        SQLiteDatabase db = mdb.getWritableDatabase();
+//        db.setLockingEnabled(false);
+//        mdb.onCreate(db);
+        mdb = new MovieStorage(getApplicationContext()); 
         
         // Set view
         setContentView(R.layout.activity_main);
@@ -80,7 +81,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		mdb.close();
+		mdb.close(false);
 		super.onDestroy();
 	}	
 	
