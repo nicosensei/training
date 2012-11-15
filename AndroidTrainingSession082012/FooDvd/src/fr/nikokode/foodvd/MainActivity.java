@@ -1,20 +1,21 @@
 package fr.nikokode.foodvd;
 
-import fr.nikokode.foodvd.bdb.MovieStorage;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import fr.nikokode.foodvd.bdb.MovieEntity.Category;
+import fr.nikokode.foodvd.bdb.MovieStorage;
 
 public class MainActivity extends Activity {
 
-	private MovieStorage mdb;
-	
-    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
@@ -23,7 +24,7 @@ public class MainActivity extends Activity {
 //        SQLiteDatabase db = mdb.getWritableDatabase();
 //        db.setLockingEnabled(false);
 //        mdb.onCreate(db);
-        mdb = new MovieStorage(getApplicationContext()); 
+        MovieStorage mdb = MovieStorageService.getInstance(getApplicationContext()).getStorage();
         mdb.loadMovieSet(R.xml.data);
         mdb.loadMovieSet(R.xml.serie);
         
@@ -86,9 +87,18 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		mdb.close(false);
+		MovieStorageService.close(); // TODO of this was a real service, should not close it.
 		super.onDestroy();
 	}	
 	
+	public void onCategoryButtonClick(View view) {	
+		Category chosenCategory = Category.fromButtonId(view.getId());
+		
+		Intent listCategoryTitles = new Intent(getApplicationContext(), ListCategoryActivity.class);
+		listCategoryTitles.putExtra(
+				ListCategoryActivity.IntentParam.CATEGORY.name(), 
+				chosenCategory.ordinal());
+		startActivity(listCategoryTitles);		
+	}
 	
 }

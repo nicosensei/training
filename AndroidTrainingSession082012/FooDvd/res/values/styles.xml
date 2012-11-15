@@ -24,6 +24,7 @@
     <style name="categoryImgButton" parent="@style/centered.horizontal">>
         <item name="android:src">@drawable/icon</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:onClick">onCategoryButtonClick</item>
     </style>
     
     <style name="categoryLabel" parent="@style/centered.horizontal">
@@ -50,6 +51,24 @@
     <style name="categoryContainer" parent="@style/centered.vertical">
         <item name="android:layout_weight">2</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+    
+    <style name="movieDetailsTitle" parent="@style/centered.vertical">
+        <item name="android:layout_weight">2</item>
+        <item name="android:textSize">12dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#aef</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:paddingLeft">20px</item>
+    </style>
+    
+    <style name="movieDetailsAuthor" parent="@style/centered.vertical">
+        <item name="android:layout_weight">2</item>
+        <item name="android:textSize">9dip</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">#eee</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:paddingLeft">20px</item>
     </style>
 
 </resources>

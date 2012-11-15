@@ -10,6 +10,8 @@ import com.sleepycat.persist.model.PrimaryKey;
 import com.sleepycat.persist.model.Relationship;
 import com.sleepycat.persist.model.SecondaryKey;
 
+import fr.nikokode.foodvd.R;
+
 /**
  * @author STAGIAIRE
  *
@@ -65,6 +67,17 @@ public class MovieEntity {
 		DOCUMENTARY,
 		FICTION,
 		SERIAL;
+		
+		public static Category fromButtonId(int id)  {
+			switch(id) {
+				case R.id.button_category_crime: return CRIME;
+				case R.id.button_category_documentary: return DOCUMENTARY;
+				case R.id.button_category_fiction: return FICTION;
+				case R.id.button_category_serial: return SERIAL;
+				default:
+					throw new RuntimeException("Unknown button id!");
+			}
+		}
 	}
 	
 	/**

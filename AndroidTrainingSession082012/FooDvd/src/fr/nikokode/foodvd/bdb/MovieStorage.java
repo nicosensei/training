@@ -3,19 +3,26 @@
  */
 package fr.nikokode.foodvd.bdb;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.SimpleAdapter;
 
 import com.sleepycat.je.DatabaseException;
 import com.sleepycat.je.Environment;
+import com.sleepycat.persist.EntityCursor;
 import com.sleepycat.persist.EntityStore;
 import com.sleepycat.persist.PrimaryIndex;
 import com.sleepycat.persist.SecondaryIndex;
 import com.sleepycat.persist.StoreConfig;
+
+import fr.nikokode.foodvd.R;
+import fr.nikokode.foodvd.bdb.MovieEntity.Category;
 
 /**
  * @author STAGIAIRE
@@ -131,6 +138,45 @@ public class MovieStorage extends AbstractBDB {
 			Log.i(LOGTAG, "Loaded " + count + " items from file,"
 					+ " discarded " + dupCount + " duplicates");
 		}
+	}
+	
+	public SimpleAdapter getListViewAdapter(Category cat, int listViewItemLayoutId) {
+		ArrayList<HashMap<String, String>> items = new ArrayList<HashMap<String,String>>();
+		
+		
+		EntityCursor<MovieEntity> movies = moviesByCategory.subIndex(cat.ordinal()).entities();
+		int count = 0;
+		try {
+			for (MovieEntity m : movies) {
+				HashMap<String, String> movieFields = new HashMap<String, String>();
+				movieFields.put(MovieEntity.XML_ATTR.IMG.getName(), m.getImgRelPath());
+				movieFields.put(MovieEntity.XML_ATTR.TITLE.getName(), m.getTitle());
+				movieFields.put(MovieEntity.XML_ATTR.FILMMAKER.getName(), m.getFilmMaker());
+				items.add(movieFields);
+				count++;
+			}
+		} finally {
+			movies.close();
+		}
+		
+		if (Log.isLoggable(LOGTAG, Log.INFO)) {
+			Log.i(LOGTAG, "Fetched " + count + " movies from storage for category " + cat.name());
+		}
+		
+		return new SimpleAdapter(
+		         appContext,
+		         items,
+		         listViewItemLayoutId,
+		         new String[] {
+		        		 MovieEntity.XML_ATTR.IMG.getName(),
+		        		 MovieEntity.XML_ATTR.TITLE.getName(),
+		        		 MovieEntity.XML_ATTR.FILMMAKER.getName()
+		         },
+		         new int[] {
+		        		 R.id.movieItemImg, 
+		        		 R.id.movieItemTitle, 
+		        		 R.id.movieItemFilmMaker
+		         });
 	}
 
 }
