@@ -62,6 +62,9 @@ public class MainActivity extends Activity {
 			case R.id.menu_about_team:
 				itemCode = R.string.menu_about_team;
 				break;
+			case R.id.menu_quit:
+				finish(); // Orderly close activity (triggers cleanup)
+				return true;
 			default:
 				itemCode = -1;
 				break;
