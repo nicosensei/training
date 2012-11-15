@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ressources>
-	<dvd cat="serie" titre="Les Experts" realisateur="Jeffrey Hunt" img="serie_1"></dvd>
-	<dvd cat="serie" titre="Cold case" realisateur="Marcos Siega" img="serie_2"></dvd>
-	<dvd cat="serie" titre="Grey's anatomy" realisateur="Bill d'Elia" img="serie_3"></dvd>
-	<dvd cat="serie" titre="NCIS" realisateur="Tony Wharmby" img="serie_4"></dvd>
-	<dvd cat="serie" titre="New Yord District" realisateur="Dick Wolf" img="serie_5"></dvd>
-</ressources>
+<movieSet>
+	<movie category="3" title="Les Experts" filmMaker="Jeffrey Hunt" img="serie_1"/>
+	<movie category="3" title="Cold case" filmMaker="Marcos Siega" img="serie_2"/>
+	<movie category="3" title="Grey's anatomy" filmMaker="Bill d'Elia" img="serie_3"/>
+	<movie category="3" title="NCIS" filmMaker="Tony Wharmby" img="serie_4"/>
+	<movie category="3" title="New Yord District" filmMaker="Dick Wolf" img="serie_5"/>
+</movieSet>

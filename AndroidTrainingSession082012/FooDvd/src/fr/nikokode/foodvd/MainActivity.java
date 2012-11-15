@@ -24,6 +24,8 @@ public class MainActivity extends Activity {
 //        db.setLockingEnabled(false);
 //        mdb.onCreate(db);
         mdb = new MovieStorage(getApplicationContext()); 
+        mdb.loadMovieSet(R.xml.data);
+        mdb.loadMovieSet(R.xml.serie);
         
         // Set view
         setContentView(R.layout.activity_main);
