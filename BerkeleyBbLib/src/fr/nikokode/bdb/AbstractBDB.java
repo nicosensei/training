@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.nikokode.foodvd.bdb;
+package fr.nikokode.bdb;
 
 
 import java.io.File;

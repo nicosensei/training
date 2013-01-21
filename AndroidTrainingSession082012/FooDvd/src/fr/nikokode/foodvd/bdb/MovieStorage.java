@@ -21,6 +21,7 @@ import com.sleepycat.persist.PrimaryIndex;
 import com.sleepycat.persist.SecondaryIndex;
 import com.sleepycat.persist.StoreConfig;
 
+import fr.nikokode.bdb.AbstractBDB;
 import fr.nikokode.foodvd.R;
 import fr.nikokode.foodvd.bdb.MovieEntity.Category;
 
