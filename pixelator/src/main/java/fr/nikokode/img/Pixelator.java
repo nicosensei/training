@@ -61,6 +61,22 @@ public class Pixelator {
 		
         System.out.println("Wrote " + out.getAbsolutePath());
         
+        CannyEdgeDetector ed = new CannyEdgeDetector();
+        ed.setLowThreshold(0.5f);
+        ed.setHighThreshold(1f);
+        ed.setSourceImage(source);
+        ed.process();
+        BufferedImage edges = ed.getEdgesImage();
+        
+        // Save as PNG
+        outPath = sourcePath.getAbsolutePath().substring(
+        		0, sourcePath.getAbsolutePath().lastIndexOf(".")) 
+        		+ "_edges" + blockSize + ".png";
+        out = new File(outPath);
+        ImageIO.write(edges, "png", out);
+		
+        System.out.println("Wrote " + out.getAbsolutePath());
+        
         System.exit(0);
 	}
 
