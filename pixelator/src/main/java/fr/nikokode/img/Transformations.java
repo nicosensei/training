@@ -7,8 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * @author ngiraud
- *
+ * @author http://www.javaprogrammingforums.com/file-input-output-tutorials/9377-image-processing-tutorial.html
  */
 public class Transformations
 {
